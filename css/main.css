@@ -1,0 +1,8 @@
+body { margin-top: 25px; }
+
+.bee { border: 1px solid #ccc; display: inline-block; padding: 10px; border-radius: 5px; margin: 0 10px 20px 0; }
+
+.disabled-bee { background-color: #fff !important; color: #ccc !important; }
+.selected-bee { background-color: #fff !important; border: 1px solid red !important; color: red !important; }
+
+.hit-deduction {top: 2px; left: 34px; border: 1px solid #ff0033; border-radius: 4px; padding: 2px 4px; display: block; position: absolute; font-size: 8px; color: #fff; background-color: #ff3333;}
