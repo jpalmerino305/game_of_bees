@@ -81,7 +81,7 @@ $(document).ready(function(){
           .css({'width': percent + '%'});
         // Update progressbar end
 
-        $('span.hit-deduction[data-bee="' + data_bee + '"]').html('- ' + deduction).show();
+        $('span.hit-deduction[data-bee="' + data_bee + '"]').html('-' + deduction).show();
         $('div.bee[data-bee="' + data_bee + '"]').addClass('selected-bee');
         setTimeout(function() {
           $('span.hit-deduction[data-bee="' + data_bee + '"]').fadeOut();
