@@ -1,10 +1,7 @@
 ### Specification:
-1. Queen Bee
- The ```Queen Bee``` has a lifespan of 100 Hit Points. When the Queen Bee is hit, 8 Hit Points are deducted from her lifespan. There is only 1 Queen Bee.
-2. Worker Bee
-```Worker Bees``` have a lifespan of 75 Hit Points. When a Worker Bee is hit, 10 Hit Points are deducted from his lifespan. There are 5 Worker Bees.
-3. Drone Bee
-```Drone Bees``` have a lifespan of 50 Hit Points. When a Drone Bee is hit, 12 Hit Points are deducted from his lifespan. There are 8 Drone Bees.
+1. ```Queen Bee``` - Has a lifespan of 100 Hit Points. When the Queen Bee is hit, 8 Hit Points are deducted from her lifespan. There is only 1 Queen Bee.
+2. ```Worker Bees``` - Have a lifespan of 75 Hit Points. When a Worker Bee is hit, 10 Hit Points are deducted from his lifespan. There are 5 Worker Bees.
+3. ```Drone Bees``` - Have a lifespan of 50 Hit Points. When a Drone Bee is hit, 12 Hit Points are deducted from his lifespan. There are 8 Drone Bees.
 
 ### Gameplay:
 * To play, user must click the "hit" button to hit a random bee. The selection of the bee is be random.
