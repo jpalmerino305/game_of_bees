@@ -19,6 +19,10 @@ $(document).ready(function(){
     is_playing = true;
 
     var bee = hitBee();
+    var hit_button = $(this);
+    var reset_button = $('#reset');
+    hit_button.attr('disabled', 'disabled');
+    reset_button.attr('disabled', 'disabled');
 
     // Try to get a group bee
     var over = false
@@ -27,7 +31,7 @@ $(document).ready(function(){
       bee = hitBee();
 
       // No more group to select, game over...
-      if (bee['group_index'] == -2){
+      if (bee['group_count'] == 0){
         over = true;
         break;
       } 
@@ -80,15 +84,18 @@ $(document).ready(function(){
         $('span.hit-deduction[data-bee="' + data_bee + '"]').html('- ' + deduction).show();
         $('div.bee[data-bee="' + data_bee + '"]').addClass('selected-bee');
         setTimeout(function() {
-          $('span.hit-deduction[data-bee="' + data_bee + '"]').html('').hide();
+          $('span.hit-deduction[data-bee="' + data_bee + '"]').fadeOut();
           $('div.bee[data-bee="' + data_bee + '"]').removeClass('selected-bee');
-        }, 3000);
+          hit_button.removeAttr('disabled');
+          reset_button.removeAttr('disabled');
+        }, 1000);
         // $('div.bee[data-bee="' + data_bee + '"]').addClass('disabled-bee').delay(2000).removeClass('selected-bee');
         if (current_points <= 0){
           $('div.bee[data-bee="' + data_bee + '"]').addClass('disabled-bee');
           // Delete object
           all_bees[bee['group_index']]['bees'].splice(bee['index'], 1);
         }
+
 
       } else {
         gameOver();
@@ -189,6 +196,8 @@ function reset(){
   loadBees();
   loadPoints();
   is_playing = false;
+  $('#hit').removeAttr('disabled');
+  $('#reset').removeAttr('disabled');
 }
 
 function gameOver(){
