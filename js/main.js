@@ -73,6 +73,9 @@ $(document).ready(function(){
         var data_bee = all_bees[bee['group_index']]['type'] + '-' + all_bees[bee['group_index']]['bees'][bee['index']]['id'];
         var color = getProgressbarColor(parseFloat(percent));
 
+        // Total Score
+        $('#total-score').html(deduction + parseInt($('#total-score').html()));
+
         // Update progressbar start
         $('span.points[data-bee="' + data_bee + '"]')
           .html((current_points >= 0) ? current_points : 0);
@@ -81,14 +84,6 @@ $(document).ready(function(){
           .css({'width': percent + '%'});
         // Update progressbar end
 
-        $('span.hit-deduction[data-bee="' + data_bee + '"]').html('-' + deduction).show();
-        $('div.bee[data-bee="' + data_bee + '"]').addClass('selected-bee');
-        setTimeout(function() {
-          $('span.hit-deduction[data-bee="' + data_bee + '"]').fadeOut();
-          $('div.bee[data-bee="' + data_bee + '"]').removeClass('selected-bee');
-          hit_button.removeAttr('disabled');
-          reset_button.removeAttr('disabled');
-        }, 1000);
         // $('div.bee[data-bee="' + data_bee + '"]').addClass('disabled-bee').delay(2000).removeClass('selected-bee');
         if (current_points <= 0){
           $('div.bee[data-bee="' + data_bee + '"]').addClass('disabled-bee');
@@ -96,10 +91,23 @@ $(document).ready(function(){
           all_bees[bee['group_index']]['bees'].splice(bee['index'], 1);
         }
 
+        $('span.hit-deduction[data-bee="' + data_bee + '"]').html('-' + deduction).show();
+        $('div.bee[data-bee="' + data_bee + '"]').addClass('selected-bee');
+
+        setTimeout(function() {
+          $('span.hit-deduction[data-bee="' + data_bee + '"]').fadeOut();
+          $('div.bee[data-bee="' + data_bee + '"]').removeClass('selected-bee');
+          hit_button.removeAttr('disabled');
+          reset_button.removeAttr('disabled');
+        }, 1000);
+
 
       } else {
         gameOver();
       }
+    } else {
+      hit_button.removeAttr('disabled');
+      reset_button.removeAttr('disabled');
     }
 
   });
@@ -155,6 +163,7 @@ function loadBees(){
 
 function loadPoints(){
   var html = '', type = '', i = 0, j = 0;
+  html += '<div class="row"><div class="col-md-12"><h4><strong>Total Score:</strong>&nbsp;<span id="total-score">0</span></h4></div></div>';
   for (i = 0; i < all_bees.length; i ++){
     type = all_bees[i]['type'];
     html += '<div class="text-right" style="margin: 0 0 10px 0;">' + capitalize(type) + '</div>';
@@ -198,6 +207,7 @@ function reset(){
   is_playing = false;
   $('#hit').removeAttr('disabled');
   $('#reset').removeAttr('disabled');
+  $('#total-score').html('0');
 }
 
 function gameOver(){
