@@ -1,5 +1,6 @@
 
 var all_bees = getBees();
+var total_score = totalScore();
 var is_playing = false;
 
 $(document).ready(function(){
@@ -67,6 +68,7 @@ $(document).ready(function(){
         var total_points = bee['bee']['data']['total_points'];
         var current_points = parseInt(bee['bee']['data']['current_points']) - parseInt(deduction);
         var percent = (((current_points) / parseFloat(total_points))) * 100;
+        var bee_type = all_bees[bee['group_index']]['type'];
 
         // Update bee points
         all_bees[bee['group_index']]['bees'][bee['index']]['current_points'] = current_points;
@@ -109,8 +111,15 @@ $(document).ready(function(){
     }
 
     hitBee(); // Hit one moretime to double check if all_bees is already empty
+
     if (all_bees.length == 0){
       gameOver();
+      return false;
+    }
+
+    if (bee_type == 'queen' && current_points <= 0){
+      emptyPoints();
+      gameOver('Game over! The queen bee is dead...');
       return false;
     }
 
@@ -190,6 +199,20 @@ function loadPoints(){
   $('#points').html(html);
 }
 
+function emptyPoints(){
+  var type = '', i = 0, j = 0;
+  for (i = 0; i < all_bees.length; i ++){
+    type = all_bees[i]['type'];
+    for (j = 0; j < all_bees[i]['bees'].length; j ++){
+      data_bee = type + '-' + all_bees[i]['bees'][j]['id'];
+      $('span.hit-deduction[data-bee="' + data_bee + '"]').html(all_bees[i]['bees'][j]['deduction']); // Display deduction
+      $('div.progress-bar[data-bee="' + data_bee + '"]').css({'width': '0%'}); // PROGRESS BAR
+      $('span.points[data-bee="' + data_bee + '"]').html('0'); // Points.. Set to 0
+    }
+  }
+  $('#total-score').html(total_score);
+}
+
 function getProgressbarColor(percent){
   var color = 'progress-bar-success';
   if (percent <= 50.0){
@@ -214,8 +237,8 @@ function reset(){
   $('#total-score').html('0');
 }
 
-function gameOver(){
-  alert('Game over! This will reset game...');
+function gameOver(msg='Game over! This game will reset...'){
+  alert(msg);
   reset();
 }
 
@@ -262,3 +285,12 @@ function getBees(){
   ];
 }
 
+function totalScore(){
+  var type = '', i = 0, j = 0, total = 0;
+  for (i = 0; i < all_bees.length; i ++){
+    for (j = 0; j < all_bees[i]['bees'].length; j ++){
+      total += parseInt(all_bees[i]['bees'][j]['total_points']);
+    }
+  }
+  return total;
+}
