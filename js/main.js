@@ -25,42 +25,39 @@ $(document).ready(function(){
     reset_button.attr('disabled', 'disabled');
 
     // Try to get a group bee
-    var over = false
     var hit_again = true;
-    while (hit_again) {
+    var group_count = all_bees.length;
+
+    if (group_count == 0){
+      gameOver();
+      return false;
+    }
+
+    while (group_count > 0 && hit_again) {
       bee = hitBee();
 
       // No more group to select, game over...
-      if (bee['group_count'] == 0){
-        over = true;
+      if (group_count == 0){
         gameOver();
         break;
       } 
 
-      // One group left, this is queen...
-      if (bee['group_count'] == 1) {
-        break;
-      }
+      //
+      // TODO:
+      // MAKE QUEEN BEE LAST TO HIT
+      //
 
       // More group left, select from it before allowing to hit the queen
-      if (bee['group_count'] > 1) {
-        if (bee['group_index'] == -1){
+      if (group_count >= 1) {
+        if (bee['index'] == -1){
           hit_again = true;
         } else {
-          if (bee['bee']['data']['priority'] == -1){
-            hit_again = true;
-          } else {
-            hit_again = false;
-          }
+          hit_again = false;
         }
       } else {
         hit_again = false;
       }
 
-    }
-
-    if (over){
-      return;
     }
 
     if (bee){
@@ -105,13 +102,16 @@ $(document).ready(function(){
           reset_button.removeAttr('disabled');
         }, 1000);
 
-
-      } else {
-        gameOver();
       }
     } else {
       hit_button.removeAttr('disabled');
       reset_button.removeAttr('disabled');
+    }
+
+    hitBee(); // Hit one moretime to double check if all_bees is already empty
+    if (all_bees.length == 0){
+      gameOver();
+      return false;
     }
 
   });
@@ -148,7 +148,7 @@ function hitBee(){
     }
   }
 
-  result['group_count'] = all_bees.length;
+  // result['group_count'] = all_bees.length;
 
   return result;
 
