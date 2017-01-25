@@ -119,7 +119,11 @@ $(document).ready(function(){
 
     if (bee_type == 'queen' && current_points <= 0){
       emptyPoints();
-      gameOver('Game over! The queen bee is dead...');
+      hit_button.attr('disabled', 'disabled');
+      reset_button.attr('disabled', 'disabled');
+      setTimeout(function() {
+         gameOver('Game over! The queen bee is dead...');
+      }, 1000);
       return false;
     }
 
