@@ -33,6 +33,7 @@ $(document).ready(function(){
       // No more group to select, game over...
       if (bee['group_count'] == 0){
         over = true;
+        gameOver();
         break;
       } 
 
@@ -43,10 +44,14 @@ $(document).ready(function(){
 
       // More group left, select from it before allowing to hit the queen
       if (bee['group_count'] > 1) {
-        if (bee['bee']['data']['priority'] == -1){
+        if (bee['group_index'] == -1){
           hit_again = true;
         } else {
-          hit_again = false;
+          if (bee['bee']['data']['priority'] == -1){
+            hit_again = true;
+          } else {
+            hit_again = false;
+          }
         }
       } else {
         hit_again = false;
@@ -55,7 +60,6 @@ $(document).ready(function(){
     }
 
     if (over){
-      gameOver();
       return;
     }
 
